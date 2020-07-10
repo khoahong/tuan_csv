@@ -13,8 +13,6 @@
 
 <div>
    <%= form_for @resume, html: { multipart: true } do |f| %>
-      <%= f.label :name %>
-      <%= f.text_field :name %>
       <br><br>
       <%= f.label :attachment %>
       <%= f.file_field :attachment %>

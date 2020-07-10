@@ -18,6 +18,7 @@ class ResumesController < ApplicationController
    
       @resume = Resume.new(resume_params)
       @resume.attachment = processed_file
+      @resume.name = file.original_filename
 
       if @resume.save
          redirect_to resumes_path, notice: "Successfully uploaded."
@@ -40,7 +41,12 @@ class ResumesController < ApplicationController
    end
    
    def proceed_csv(csv_file_path)
-      table = CSV.read(csv_file_path)
+      begin
+         table = CSV.read(csv_file_path, col_sep: ';')
+      rescue
+         table = CSV.read(csv_file_path, col_sep: ',')
+      end
+      
       file = CSV.open(csv_file_path, "w")
       tmp_hash_c = Set.new
 
