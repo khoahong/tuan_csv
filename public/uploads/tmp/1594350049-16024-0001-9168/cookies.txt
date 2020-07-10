@@ -1,0 +1,17 @@
+# HTTP Cookie File downloaded with cookies.txt by Genuinous @genuinous
+# This file can be used by wget, curl, aria2c and other standard compliant tools.
+# Usage Examples:
+#   1) wget -x --load-cookies cookies.txt "https://www.dorcelclub.com/en/"
+#   2) curl --cookie cookies.txt "https://www.dorcelclub.com/en/"
+#   3) aria2c --load-cookies cookies.txt "https://www.dorcelclub.com/en/"
+#
+www.dorcelclub.com	FALSE	/	FALSE	0	t	google
+.dorcelclub.com	TRUE	/	FALSE	1656825060	_ga	GA1.2.1211605863.1593753053
+.dorcelclub.com	TRUE	/	FALSE	1593839460	_gid	GA1.2.730362209.1593753053
+.dorcelclub.com	TRUE	/	FALSE	1593753113	_gat_gtag_UA_21501594_1	1
+.dorcelclub.com	TRUE	/	FALSE	1593753113	_gat_gtag_UA_96999780_1	1
+www.dorcelclub.com	FALSE	/	FALSE	1625289054	u	5efebddd497ec9d494c
+.dorcelclub.com	TRUE	/	FALSE	0	disclaimer2	xx
+www.dorcelclub.com	FALSE	/	FALSE	0	dorcelclub	lfmm95kk76qaag84g8l2f7ir06
+.dorcelclub.com	TRUE	/	FALSE	0	ld	6f55c3
+.dorcelclub.com	TRUE	/	FALSE	1625289059	acceptCookie	1
