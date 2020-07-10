@@ -1,3 +1,6 @@
+require 'set'
+require 'csv'
+
 class ResumesController < ApplicationController
    def index
       @resumes = Resume.all
@@ -8,9 +11,13 @@ class ResumesController < ApplicationController
    end
    
    def create
+      # contents = @resume.attachment.read
+      # puts File.dirname(@resume.attachment.file.path)
+      file = params[:resume]['attachment']
+      processed_file = proceed_csv(file.path)
+   
       @resume = Resume.new(resume_params)
-      
-      contents = @resume.attachment.read
+      @resume.attachment = processed_file
 
       if @resume.save
          redirect_to resumes_path, notice: "Successfully uploaded."
@@ -27,8 +34,28 @@ class ResumesController < ApplicationController
    end
    
    private
-      def resume_params
+
+   def resume_params
       params.require(:resume).permit(:name, :attachment)
    end
    
+   def proceed_csv(csv_file_path)
+      table = CSV.read(csv_file_path)
+      file = CSV.open(csv_file_path, "w")
+      tmp_hash_c = Set.new
+
+      table.each do |row|
+         tmp_hash_c.add(row.last)
+      end
+         
+      table.each do |row|
+         if (!row.first.nil? && !tmp_hash_c.include?(row.first))
+            file << row
+         end
+      end
+
+      file.close
+
+      file
+   end
 end
