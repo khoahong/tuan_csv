@@ -14,18 +14,21 @@ class ResumesController < ApplicationController
       # contents = @resume.attachment.read
       # puts File.dirname(@resume.attachment.file.path)
       file = params[:resume]['attachment']
-      processed_file = proceed_csv(file.path)
-   
-      @resume = Resume.new(resume_params)
-      @resume.attachment = processed_file
-      @resume.name = file.original_filename
-
-      if @resume.save
-         redirect_to resumes_path, notice: "Successfully uploaded."
-      else
-         render "new"
-      end
       
+      if (File.extname(file.path) != '.csv')
+         render text: "Not a .csv file!"
+      else
+         processed_file = proceed_csv(file.path, file.original_filename)
+         @resume = Resume.new(resume_params)
+         @resume.attachment = processed_file
+         @resume.name = file.original_filename
+   
+         if @resume.save
+            redirect_to resumes_path, notice: "Successfully uploaded."
+         else
+            render "new"
+         end
+      end
    end
    
    def destroy
@@ -40,14 +43,17 @@ class ResumesController < ApplicationController
       params.require(:resume).permit(:name, :attachment)
    end
    
-   def proceed_csv(csv_file_path)
+   def proceed_csv(csv_file_path, original_filename)
       begin
          table = CSV.read(csv_file_path, col_sep: ';')
       rescue
          table = CSV.read(csv_file_path, col_sep: ',')
       end
       
-      file = CSV.open(csv_file_path, "w")
+      new_file_name = original_filename.split('.csv').first + "_loc" + File.extname(original_filename)
+      new_file_path = File.dirname(csv_file_path) + '/' + new_file_name
+
+      file = CSV.open(new_file_path, "w")
       tmp_hash_c = Set.new
 
       table.each do |row|
