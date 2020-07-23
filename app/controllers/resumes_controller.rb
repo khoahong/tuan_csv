@@ -45,9 +45,9 @@ class ResumesController < ApplicationController
    
    def proceed_csv(csv_file_path, original_filename)
       begin
-         table = CSV.read(csv_file_path, col_sep: ';')
+         table = CSV.read(csv_file_path, col_sep: ';', encoding: 'iso-8859-1:utf-8')
       rescue
-         table = CSV.read(csv_file_path, col_sep: ',')
+         table = CSV.read(csv_file_path, col_sep: ',', encoding: 'iso-8859-1:utf-8')
       end
       
       new_file_name = original_filename.split('.csv').first + "_loc" + File.extname(original_filename)
